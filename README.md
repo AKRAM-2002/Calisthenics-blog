@@ -28,7 +28,7 @@ CalisthenicsBlog/
 - ORM SqlAlchemy Database
 
 ### Features
-- Registration and Login
+- Registration and Login System
 - 
 
 
