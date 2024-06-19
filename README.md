@@ -29,7 +29,8 @@ CalisthenicsBlog/
 
 ### Features
 - Registration and Login System
-- 
+- CRUD Blogs
+- Ai writer 
 
 
 ### Concepts

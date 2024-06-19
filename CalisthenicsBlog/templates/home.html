@@ -2,17 +2,20 @@
 
 {% block content %}
     <div class="container mt-5">
+        <h1 class="mb-4">Recent Calisthenics Articles</h1>
         {% for post in posts %}
         <article class="media content-section mb-4">
+            <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
             <div class="media-body">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h5 class="article-title mb-0"><a href="#">{{ post.title }}</a></h5>
-                    <small class="text-muted">{{ post.date_posted }}</small>
+                    <h2 class="article-title mb-0"><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                    <small class="text-muted">Posted on {{ post.date_posted.strftime('%Y-%m-%d') }}</small>
                 </div>
                 <div class="mb-2">
-                    <a class="text-secondary" href="#">{{ post.author }}</a>
+                    <a class="text-secondary" href="#">by {{ post.author.username }}</a>
                 </div>
-                <p class="article-content">{{ post.content }}</p>
+                <p class="article-content">{{ post.content[:5] | safe}}...</p>
+                <a href="{{ url_for('post', post_id=post.id) }}" class="btn btn-primary">Read More</a>
             </div>
         </article>
         {% endfor %}
