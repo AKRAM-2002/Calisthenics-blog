@@ -1,6 +1,66 @@
 {% extends "layout.html" %}
-{% block content %}
-    <h1>About Page</h1>
-{% endblock content%}
-    
 
+{% block content %}
+<div class="about-container">
+    
+    <div class="title">
+        <img src="{{ url_for('static', filename='images/Moroccan_hat.png') }}" alt="Moroccan Fez" class="moroccan-hat">
+        <h1 class="about-title">Welcome to Kingdom Calisthenics</h1>
+    </div>
+    <section class="intro">
+        <p>I'm Akram, the creator of Kingdom Calisthenics, and I’m thrilled to have you here. This is more than just a fitness blog—it's a movement dedicated to helping you unlock your physical potential with nothing but your body and determination.</p>
+    </section>
+
+    <section class="mission">
+        <h2>Our Mission</h2>
+        <p>Kingdom Calisthenics is built on the belief that fitness should be accessible to all, requiring only your body and a strong mindset. We’re here to guide you on this transformative journey to strength and resilience.</p>
+    </section>
+    
+    <section class="values">
+        <h2>Our Core Values</h2>
+        <ul>
+            <li><span>Empowerment:</span> Strength comes from within. We empower everyone to take charge of their fitness journey with confidence and independence.</li>
+            <li><span>Community:</span> You’re not alone. Our community is a place to connect, support, and grow alongside others on the same path.</li>
+            <li><span>Progress Over Perfection:</span> Fitness is a journey. We value small steps and the consistent progress that makes lasting change.</li>
+        </ul>
+    </section>
+
+    <section class="content">
+        <h2>What You'll Find Here</h2>
+        <p>Explore topics that guide you at every stage of your fitness journey:</p>
+        <ul>
+            <li><strong>In-Depth Workouts:</strong> Bodyweight workouts tailored for strength, mobility, and endurance.</li>
+            <li><strong>Skill Progressions:</strong> Learn moves like muscle-ups, handstands, and more.</li>
+            <li><strong>Mindset & Motivation:</strong> Mental strategies for resilience and self-discipline.</li>
+        </ul>
+    </section>
+
+    <section class="about-author">
+        <h2>About the Founder</h2>
+        <p>I'm Akram, a passionate calisthenics trainer and the voice behind Kingdom Calisthenics. I started this journey to create a space for those who want to achieve greatness through bodyweight training. My goal? To help you build physical and mental strength, one step at a time.</p>
+    </section>
+
+    <section class="join-community">
+        <h2>Join the Kingdom</h2>
+        <p>Connect with us on social media, subscribe to our newsletter, and join our community. Together, we’ll redefine strength.</p>
+        <p class="signature">Welcome to the Kingdom.<br>— <italic>AKRAM BOUTZOUGA</italic></p>
+    </section>
+
+    <section class="newsletter-signup">
+      <h2>Subscribe to Our Newsletter</h2>
+      <p>Get updates, tips, and exclusive content delivered to your inbox.</p>
+      <form id="newsletter-form" method="post" action="{{ url_for('subscribe') }}">
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="alert alert-success">
+            {{ messages[0] }}
+          </div>
+        {% endif %}
+      {% endwith %}
+    </section>
+</div>
+
+{% endblock content %}

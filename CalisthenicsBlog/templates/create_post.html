@@ -5,6 +5,8 @@
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">New Post</legend>
+
+                <!-- Title Field -->
                 <div class="form-group">
                     {{ form.title.label(class="form-control-label") }}
                     {% if form.title.errors %}
@@ -18,6 +20,8 @@
                         {{ form.title(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
+
+                <!-- Content Field -->
                 <div class="form-group">
                     {{ form.content.label(class="form-control-label") }}
                     {% if form.content.errors %}
@@ -31,17 +35,53 @@
                         {{ form.content(class="form-control form-control-lg", id="content-editor") }}
                     {% endif %}
                 </div>
-                
+
+                <!-- Category Field -->
+                <div class="form-group">
+                    {{ form.category.label(class="form-control-label") }}
+                    {% if form.category.errors %}
+                        {{ form.category(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.category.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.category(class="form-control") }}
+                    {% endif %}
+                </div>
+
+                <!-- Tags Field (Optional) -->
+                <div class="form-group">
+                    {{ form.tags.label(class="form-control-label") }}
+                    <div class="d-flex flex-wrap">
+                        {% for tag in form.tags %}
+                            <div class="form-check form-check-inline mr-3">
+                                {{ tag(class="form-check-input") }}
+                                {{ tag.label(class="form-check-label") }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if form.tags.errors %}
+                        <div class="invalid-feedback d-block">
+                            {% for error in form.tags.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Submit Button -->
                 <div class="form-group mt-3">
                     {{ form.submit(class="btn btn-outline-info btn-lg btn-block") }}
                 </div>
             </fieldset>
-            
-            
         </form>
     </div>
+
+    <!-- CKEditor Script for Content Field -->
     <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('content-editor');
     </script>
-{% endblock content%}
+{% endblock content %}

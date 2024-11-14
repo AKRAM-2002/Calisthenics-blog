@@ -1,0 +1,162 @@
+/* Main container styling */
+.about-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background for contrast */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    position: relative;
+    display: flex;
+    align-items: flex-start; /* Align items at the top */
+}
+.moroccan-hat {
+    position: absolute;
+    top: -50px;  /* Adjust vertically as needed */
+    left: -40px; /* Adjust horizontally as needed */
+    width: 80px; /* Adjust the width if needed */
+    height: auto;
+}
+
+/* Title and section headers */
+.about-title {
+    font-size: 2.5em;
+    color: #003366; /* Dark blue matching your header */
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.about-container h2 {
+    font-size: 1.8em;
+    color: #003366; /* Dark blue for section headers */
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* Paragraph and list styles */
+.about-container p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #333333; /* Dark gray for readability */
+    margin-bottom: 20px;
+}
+
+.about-container ul {
+    padding-left: 20px;
+    list-style-type: none;
+}
+
+.about-container ul li {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: #333333;
+}
+
+.about-container ul li span {
+    font-weight: 600;
+    color: #0056b3; /* Light blue to highlight key terms */
+}
+
+.about-container ul li strong {
+    color: #0056b3; /* Light blue for emphasis */
+}
+
+/* Signature style */
+.signature {
+    font-style: italic;
+    color: #0056b3; /* Light blue for a personalized touch */
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* Call to action */
+.join-community {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.join-community p {
+    font-size: 1.2em;
+    color: #003366;
+}
+
+/* Additional link styling */
+.about-container a {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+.about-container a:hover {
+    color: #003366;
+    text-decoration: underline;
+}
+
+/* Newsletter Signup Section */
+.newsletter-signup {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+    text-align: center;
+}
+
+.newsletter-signup h2 {
+    font-size: 1.8em;
+    color: #003366;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.newsletter-signup p {
+    font-size: 1.1em;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.newsletter-signup form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.newsletter-signup input[type="email"] {
+    font-size: 1.1em;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 250px;
+}
+
+.newsletter-signup button[type="submit"] {
+    font-size: 1.1em;
+    padding: 10px 20px;
+    background-color: #003366;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.newsletter-signup button[type="submit"]:hover {
+    background-color: #002147;
+}
+
+/* Success Message */
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.1em;
+}

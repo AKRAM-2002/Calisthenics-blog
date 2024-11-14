@@ -3,21 +3,75 @@
 {% block content %}
     <div class="container mt-5">
         <h1 class="mb-4">Recent Calisthenics Articles</h1>
-        {% for post in posts %}
-        <article class="media content-section mb-4">
-            <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
-            <div class="media-body">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h2 class="article-title mb-0"><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
-                    <small class="text-muted">Posted on {{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+        
+        <!-- Filter Options -->
+        <form method="get" action="{{ url_for('home') }}" class="mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="category">Category</label>
+                    <select name="category" id="category" class="form-control">
+                        <option value="">All Categories</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}" {% if category.id == request.args.get('category', type=int) %}selected{% endif %}>{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <div class="mb-2">
-                    <a class="text-secondary" href="#">by {{ post.author.username }}</a>
+                <div class="col-md-4">
+                    <label for="tag">Tag</label>
+                    <select name="tag" id="tag" class="form-control">
+                        <option value="">All Tags</option>
+                        {% for tag in tags %}
+                            <option value="{{ tag.id }}" {% if tag.id == request.args.get('tag', type=int) %}selected{% endif %}>{{ tag.name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <p class="article-content">{{ post.content[:5] | safe}}...</p>
-                <a href="{{ url_for('post', post_id=post.id) }}" class="btn btn-primary">Read More</a>
+                <div class="col-md-4 align-self-end">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
             </div>
-        </article>
+        </form>
+
+        <!-- Display Posts -->
+        {% for post in posts.items %}
+            <article class="media content-section mb-4">
+                <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" alt="">
+                <div class="media-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h2 class="article-title mb-0"><a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                        <small class="text-muted">Posted on {{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                    </div>
+                    <div class="mb-2">
+                        <a class="text-secondary" href="#">by {{ post.author.username }}</a>
+                    </div>
+                    <p class="article-content">{{ post.content[:100] | safe }}...</p>
+                    <a href="{{ url_for('post', post_id=post.id) }}" class="btn btn-primary">Read More</a>
+                </div>
+            </article>
         {% endfor %}
+
+        <!-- Pagination Links -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if posts.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('home', page=posts.prev_num, category=request.args.get('category'), tag=request.args.get('tag')) }}">Previous</a>
+                    </li>
+                {% endif %}
+                {% for page_num in posts.iter_pages() %}
+                    {% if page_num %}
+                        <li class="page-item {% if page_num == posts.page %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('home', page=page_num, category=request.args.get('category'), tag=request.args.get('tag')) }}">{{ page_num }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">…</span></li>
+                    {% endif %}
+                {% endfor %}
+                {% if posts.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('home', page=posts.next_num, category=request.args.get('category'), tag=request.args.get('tag')) }}">Next</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
 {% endblock content %}

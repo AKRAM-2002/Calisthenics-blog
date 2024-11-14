@@ -1,0 +1,146 @@
+<!-- CalisthenicsBlog/templates/admin/index.html -->
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row mt-4">
+        <!-- Statistics Cards -->
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Posts</h5>
+                    <p class="card-text display-4">{{ stats.total_posts }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <p class="card-text display-4">{{ stats.total_users }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Categories</h5>
+                    <p class="card-text display-4">{{ stats.total_categories }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Tags</h5>
+                    <p class="card-text display-4">{{ stats.total_tags }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Recent Posts -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Recent Posts
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for post in stats.recent_posts %}
+                        <a href="{{ url_for('post', post_id=post.id) }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ post.title }}</h5>
+                                <small>{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                            </div>
+                            <p class="mb-1">{{ post.excerpt or post.content[:100] + '...' }}</p>
+                            <small>By {{ post.author.username }}</small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+        <!-- Recent Users -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Recent Users
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for user in stats.recent_users %}
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ user.username }}</h5>
+                                <small>{{ user.posts|length }} posts</small>
+                            </div>
+                            <p class="mb-1">{{ user.email }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Management -->
+        <div class="row mt-4">
+            <!-- User Management -->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        Manage Users
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Writer Application</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in stats.recent_users %}
+                                <tr>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>
+                                        <form action="{{ url_for('user_role_change', user_id=user.id) }}" method="POST">
+                                            <select name="role" onchange="this.form.submit()">
+                                                <option value="reader" {% if user.role == 'reader' %}selected{% endif %}>Reader</option>
+                                                <option value="writer" {% if user.role == 'writer' %}selected{% endif %}>Writer</option>
+                                                <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+                                            </select>
+                                        </form>
+                                    </td>
+                                    <td>{{ 'Pending' if user.is_writer_applicant else 'N/A' }}</td>
+                                    <td>
+                                        {% if user.is_writer_applicant %}
+                                        <form action="{{ url_for('approve_writer', user_id=user.id) }}" method="POST">
+                                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                        </form>
+                                        <form action="{{ url_for('reject_writer', user_id=user.id) }}" method="POST">
+                                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                        </form>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+{% endblock %}

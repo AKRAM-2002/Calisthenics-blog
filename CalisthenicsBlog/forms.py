@@ -1,10 +1,11 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, validators, ValidationError, FileField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, widgets, ValidationError, FileField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from CalisthenicsBlog.models import User 
 from flask_wtf.file import FileAllowed; FileAllowed
-
+from wtforms_sqlalchemy.fields import QuerySelectField
+from CalisthenicsBlog.models import Category, Tag
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', 
@@ -64,4 +65,11 @@ class UpdateAccountForm(FlaskForm):
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
+    category = QuerySelectField('Category', query_factory=lambda: Category.query, get_label='name')
+    tags = QuerySelectField('Tags', query_factory=lambda: Tag.query, 
+        get_label='name', 
+        widget=widgets.ListWidget(prefix_label=False), 
+        option_widget=widgets.CheckboxInput(), 
+        render_kw={'class': 'form-check-input'}, 
+        validators=[DataRequired()])
     submit = SubmitField('Post')
